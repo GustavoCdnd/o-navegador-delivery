@@ -11,6 +11,10 @@ const cartCounter = document.getElementById("cart-count")
 const adressInput = document.getElementById("adress")
 const adressWarn = document.getElementById("adress-warn")
 const ClientName = document.getElementById("client-name")
+const deliveryArea   = document.getElementById("delivery-area");  // <select> bairro|taxa
+const paymentMethod  = document.getElementById("payment-method"); // <select> pagamento
+const changeSection  = document.getElementById("change-section"); // <div> campo troco
+const cashGivenInput = document.getElementById("cash-given");     // <input> valor entregue
 
 
 let cart = [];
@@ -156,88 +160,93 @@ adressInput.addEventListener("input", function(event){
 
 })
 
-document.addEventListener("DOMContentLoaded", function () {
-  const checkoutBtn = document.getElementById("checkout-btn");
-  const adressInput = document.getElementById("adress");
-  const adressWarn = document.getElementById("adress-warn");
-  const clientNameInput = document.getElementById("client-name");
+checkoutBtn.addEventListener("click", function () {
+  const aberto = checkRestaurantOpen();
+  if (!aberto) {
+    Toastify({
+      text: "Restaurante Fechado",
+      duration: 3000,
+      close: true,
+      gravity: "top",
+      position: "right",
+      style: { background: "linear-gradient(to right, #b30000)" }
+    }).showToast();
+    return;
+  }
 
-  checkoutBtn.addEventListener("click", function () {
-    const aberto = checkRestaurantOpen();
+  if (cart.length === 0) {
+    alert("Carrinho vazio.");
+    return;
+  }
 
-    if (!aberto) {
-      Toastify({
-  text: "Restaurante Fechado",
-  duration: 3000,
-  destination: "https://github.com/apvarun/toastify-js",
-  newWindow: true,
-  close: true,
-  gravity: "top", // `top` or `bottom`
-  position: "right", // `left`, `center` or `right`
-  stopOnFocus: true, // Prevents dismissing of toast on hover
-  style: {
-    background: "linear-gradient(to right, #b30000)",
-  },
-  onClick: function(){} // Callback after click
-}).showToast();
-      
-      return;
-    }
-    
+  if (ClientName.value.trim() === "") {
+    alert("Por favor, informe seu nome.");
+    ClientName.focus();
+    return;
+  }
 
-    if (cart.length === 0) {
-      alert("Carrinho vazio.");
-      return;
-    }
+  if (adressInput.value.trim() === "") {
+    adressWarn.classList.remove("hidden");
+    adressInput.classList.add("border-red-500");
+    return;
+  } else {
+    adressWarn.classList.add("hidden");
+    adressInput.classList.remove("border-red-500");
+  }
 
-    if (clientNameInput.value.trim() === "") {
-      alert("Por favor, informe seu nome.");
-      clientNameInput.focus();
-      return;
-    }
+  if (!deliveryArea?.value) {
+    alert("Selecione o bairro de entrega.");
+    return;
+  }
 
-    if (adressInput.value.trim() === "") {
-      adressWarn.classList.remove("hidden");
-      adressInput.classList.add("border-red-500");
-      return;
-    } else {
-      adressWarn.classList.add("hidden");
-      adressInput.classList.remove("border-red-500");
-    }
+  if (!paymentMethod?.value) {
+    alert("Selecione a forma de pagamento.");
+    return;
+  }
 
-    // Monta os itens do carrinho com formato estilizado
-    const cartItems = cart.map(item =>
-      `- ${item.name} (Qtd: ${item.quantity}) - R$${item.price.toFixed(2)}`
-    ).join("\n");
+  // Itens do carrinho
+  const cartItems = cart.map(item =>
+    `- ${item.name} (Qtd: ${item.quantity}) - R$${item.price.toFixed(2)}`
+  ).join("\n");
 
-    // Calcula o total do pedido
-    const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  // Subtotal e taxa
+  const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const [bairro, taxaStr] = deliveryArea.value.split("|");
+  const taxaEntrega = Number(taxaStr) || 0;
+  const total = subtotal + taxaEntrega;
 
-    // Monta a mensagem completa formatada para o WhatsApp, incluindo o nome
-    const fullMessage = 
-`👋 Olá! Meu nome é ${clientNameInput.value.trim()} e gostaria deste pedido:
+  // Forma de pagamento + troco
+  let pagamentoMsg = "";
+  if (paymentMethod.value === "dinheiro") {
+    const valorPago = Number(cashGivenInput?.value.replace(",", ".") || 0);
+    const troco = Math.max(0, valorPago - total);
+    pagamentoMsg = valorPago > 0
+      ? `Dinheiro (entregue: R$${valorPago.toFixed(2)} | troco: R$${troco.toFixed(2)})`
+      : "Dinheiro (sem troco)";
+  } else {
+    pagamentoMsg = paymentMethod.value === "cartao" ? "Cartão (crédito/débito)" : "Pix";
+  }
+
+  // Monta mensagem para WhatsApp
+  const fullMessage =
+`👋 Olá! Meu nome é ${ClientName.value.trim()} e gostaria deste pedido:
 
 ${cartItems}
 
-💰 Total: R$ ${total.toFixed(2)} + taxa de entrega
+🧾 Subtotal: R$${subtotal.toFixed(2)}
+🚚 Bairro: ${bairro} | Taxa: R$${taxaEntrega.toFixed(2)}
+💰 Total: R$${total.toFixed(2)}
+💳 Pagamento: ${pagamentoMsg}
 
 🏠 Endereço: ${adressInput.value}
 
 Obrigado! 😊`;
 
-    // Codifica a mensagem para URL
-    const encoded = encodeURIComponent(fullMessage);
-
-    // Número do WhatsApp com DDI e DDD
-    const phone = "5595984128590";
-
-    // URL para abrir o WhatsApp com mensagem preenchida
-    const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encoded}`;
-
-    // Abre o WhatsApp em nova aba
-    window.open(url, "_blank");
-  });
+  const encoded = encodeURIComponent(fullMessage);
+  const phone = "5595984128590";
+  window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank");
 });
+
 
   // Função para verificar se restaurante está aberto
   function checkRestaurantOpen() {
@@ -287,4 +296,43 @@ Obrigado! 😊`;
       lastScroll = currentScroll <= 0 ? 0 : currentScroll;
     });
   });
+
+
+  // Ajuste da atualização com bairro, taxa e forma de paga//
+
+  const BRL = (v) => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+// --- Subtotal do carrinho ---
+function getSubtotal() {
+  return cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+}
+
+// --- Taxa de entrega vinda do select (ex.: "Centro|5.00") ---
+function getTaxaEntrega() {
+  if (!deliveryArea || !deliveryArea.value) return 0;
+  const [, taxa] = deliveryArea.value.split("|");
+  return Number(taxa) || 0;
+}
+
+// --- Atualiza o total exibido no modal (subtotal + taxa) ---
+function updateTotalDisplay() {
+  const total = getSubtotal() + getTaxaEntrega();
+  cartTotal.textContent = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+// --- Mostrar/esconder campo de troco conforme pagamento ---
+paymentMethod?.addEventListener("change", () => {
+  if (paymentMethod.value === "dinheiro") {
+    changeSection?.classList.remove("hidden");
+  } else {
+    changeSection?.classList.add("hidden");
+    if (cashGivenInput) cashGivenInput.value = "";
+  }
+});
+
+// --- Recalcular total quando mudar o bairro ---
+deliveryArea?.addEventListener("change", updateTotalDisplay);
+
+// --- Chama uma vez pra sincronizar o total ao abrir ---
+updateTotalDisplay();
 
