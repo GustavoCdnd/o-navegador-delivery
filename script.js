@@ -17,6 +17,11 @@ const changeSection  = document.getElementById("change-section"); // <div> campo
 const cashGivenInput = document.getElementById("cash-given");     // <input> valor entregue
 
 
+
+
+
+
+
 let cart = [];
 
 // Abrir o carrinho//
@@ -257,9 +262,29 @@ Obrigado! 😊`;
 ;
 
 
+
+
+
+// Função para abrir o modal e adicionar as bebidas//
+
+let selectedCombo = null;
+
+combos.addEventListener("click", function(event){
+  let parentButton = event.target.closest(".add-to-cart-btn")
+  
+  if(parentButton){
+      const name = parentButton.getAttribute("data-name")
+      const price = parseFloat(parentButton.getAttribute("data-price"))
+
+      // Guardamos o combo selecionado temporariamente
+      selectedCombo = { name, price };
+
+      // Preenche o modal de bebidas conforme o combo
+      openDrinkModal(name);
+  }
+})
+
 // Função loja aberta ou fechada//
-
-
   const dateSpan = document.getElementById("date-span");
 
   if (dateSpan) {
