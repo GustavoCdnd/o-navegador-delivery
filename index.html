@@ -14,7 +14,7 @@
     <title>O Navegador</title>
 </head>
 
-<body>
+<body style="background-color: rgb(253, 253, 253);">
 
 <header class="w-full h-[420px] bg-zinc-900 bg-[url('../assets/capa.jpg')] bg-cover bg-center relative">
   
@@ -60,63 +60,71 @@
 
 
 <h2 class="text-2xl font-bold text-center mb-6 mt-6 md:text-3xl">Combos</h2>
-
 <div class="flex justify-center flex-1 items-center gap-4 grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 mx-auto gap-7 max-w-7xl px-8 mb-20 md:gap-10" id="combos">
 
- <div class="flex gap-2 m-2">
-      <img class="w-24 h-28 rounded-md borderered hover:scale-110 duration-300" src="./assets/combo-classico.png" alt="combo clasico">
-      <div>
-        <p class="font-bold text-lg">Combo Clássico</p>
-        <p class="text-sm">Clássico do Porto, batata frita 80g e refrigerantes lata</p>
-        <div class="flex items-center gap-2 justify-between mt-3">
-          <p>R$ 22.00</p>
-          <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Combo Clássico" data-price="22.00" data-drink-type="lata" data-drink-count="1"> <i class="fa fa-cart-plus text-lg text-white"></i> </button>
-        </div>
+  <!-- Combo Clássico -->
+  <div class="bg-white rounded-lg shadow-md p-4 flex gap-4 m-2 hover:scale-105 duration-300">
+    <img class="w-24 h-28 rounded-md object-cover" src="./assets/combo-classico.png" alt="Combo Clássico">
+    <div class="flex flex-col justify-between">
+      <span style="background-color: rgb(255, 188, 62); color: white; border-radius: 10px; width: 50%; text-align: center;">Mais Pedido</span>
+      <p class="font-bold text-lg text-gray-900">Combo Clássico</p>
+      <p class="text-sm text-gray-500">Clássico do Porto, batata frita 80g e refrigerantes lata</p>
+      <div class="flex items-center gap-2 justify-between mt-3">
+        <p class="text-green-600 font-bold">R$ 22,00</p>
+        <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Combo Clássico" data-price="22.00" data-drink-type="lata" data-drink-count="1">
+          <i class="fa fa-cart-plus text-lg text-white"></i>
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="flex gap-2 m-2 ">
-      <img class="w-24 h-28 rounded-md borderered hover:scale-110 duration-300" src="./assets/COMBO-TRIPULACAO-A-2.png" alt="classico-do-porto">
-      <div>
-        <p class="font-bold text-lg">Tripulação a 2</p>
-        <p class="text-sm">X Artesanal, rings do galeão, onion rings e dois refrigerantes lata</p>
-        <div class="flex items-center gap-2 justify-between mt-3">
-          <p>R$ 59,90</p>
-          <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Tripulação a 2" data-price="59.90" data-drink-type="lata" data-drink-count="2"> <i class="fa fa-cart-plus text-lg text-white"></i> </button>
-        </div>
+  <!-- Tripulação a 2 -->
+  <div class="bg-white rounded-lg shadow-md p-4 flex gap-4 m-2 hover:scale-105 duration-300">
+    <img class="w-24 h-28 rounded-md object-cover" src="./assets/COMBO-TRIPULACAO-A-2.png" alt="Tripulação a 2">
+    <div class="flex flex-col justify-between">
+      <p class="font-bold text-lg text-gray-900">Tripulação a 2</p>
+      <p class="text-sm text-gray-500">X Artesanal, rings do galeão, onion rings e dois refrigerantes lata</p>
+      <div class="flex items-center gap-2 justify-between mt-3">
+        <p class="text-green-600 font-bold">R$ 59,90</p>
+        <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Tripulação a 2" data-price="59.90" data-drink-type="lata" data-drink-count="2">
+          <i class="fa fa-cart-plus text-lg text-white"></i>
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="flex gap-2 m-2">
-      <img class="w-24 h-28 rounded-md borderered hover:scale-110 duration-300" src="./assets/combo-da-tripulacao.png" alt="classico-do-porto">
-      <div>
-        <p class="font-bold text-lg">Combo da Tripulação</p>
-        <p class="text-sm">2 maré dupla, dois clássicos do porto, batata e refrige-<br>rante 1,5l</p>
-        <div class="flex items-center gap-2 justify-between mt-3">
-          <p>R$ 99,90</p>
-          <button class="bg-gray-500 px-5 rounded add-to-cart-btn"
-            data-name="Combo da Tripulação"
-            data-price="99.90">
-            <i class="fa fa-cart-plus text-lg text-white"></i>
-          </button>
-        </div>
+  <!-- Combo da Tripulação -->
+  <div class="bg-white rounded-lg shadow-md p-4 flex gap-4 m-2 hover:scale-105 duration-300">
+    <img class="w-24 h-28 rounded-md object-cover" src="./assets/combo-da-tripulacao.png" alt="Combo da Tripulação">
+    <div class="flex flex-col justify-between">
+      <p class="font-bold text-lg text-gray-900">Combo da Tripulação</p>
+      <p class="text-sm text-gray-500">2 maré dupla, dois clássicos do porto, batata e refrigerante 1,5l</p>
+      <div class="flex items-center gap-2 justify-between mt-3">
+        <p class="text-green-600 font-bold">R$ 99,90</p>
+        <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Combo da Tripulação" data-price="99.90">
+          <i class="fa fa-cart-plus text-lg text-white"></i>
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="flex gap-2 m-2 ">
-      <img class="w-28 h-28 rounded-md borderered hover:scale-110 duration-300" src="./assets/destaque-classico-do-porto.jpg" alt="classico-do-porto">
-      <div>
-        <p class="font-bold text-lg">Combo do Capitão</p>
-        <p class="text-sm">Almirante, Pérola negra, Almirante dourado, porçao de batata <br>especial, refrigerante 1,5l</p>
-        <div class="flex items-center gap-2 justify-between mt-3">
-          <p>R$ 104,90</p>
-          <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Combo do Capitão" data-price="104.90" data-drink-type="garrafa15" data-drink-count="1"> <i class="fa fa-cart-plus text-lg text-white"></i>
-          </button>
-        </div>
+  <!-- Combo do Capitão -->
+  <div class="bg-white rounded-lg shadow-md p-4 flex gap-4 m-2 hover:scale-105 duration-300">
+    <img class="w-24 h-28 rounded-md object-cover" src="./assets/destaque-classico-do-porto.jpg" alt="Combo do Capitão">
+    <div class="flex flex-col justify-between">
+      <p class="font-bold text-lg text-gray-900">Combo do Capitão</p>
+      <p class="text-sm text-gray-500">Almirante, Pérola negra, Almirante dourado, porção de batata especial, refrigerante 1,5l</p>
+      <div class="flex items-center gap-2 justify-between mt-3">
+        <p class="text-green-600 font-bold">R$ 104,90</p>
+        <button class="bg-gray-500 px-5 rounded add-to-cart-btn" data-name="Combo do Capitão" data-price="104.90" data-drink-type="garrafa15" data-drink-count="1">
+          <i class="fa fa-cart-plus text-lg text-white"></i>
+        </button>
       </div>
     </div>
+  </div>
 
 </div>
+
 
 
 
@@ -773,16 +781,3 @@
    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
