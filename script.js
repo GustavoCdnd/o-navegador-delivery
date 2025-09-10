@@ -16,155 +16,120 @@ const paymentMethod  = document.getElementById("payment-method"); // <select> pa
 const changeSection  = document.getElementById("change-section"); // <div> campo troco
 const cashGivenInput = document.getElementById("cash-given");     // <input> valor entregue
 
-
-
-
-
-
-
 let cart = [];
 
-// Abrir o carrinho//
-
+// --- Abrir o carrinho ---
 cartBtn.addEventListener("click", function() {
     updateCartModal();
     cartModal.style.display = "flex"
-    
-
 })
 
-//fechamento do carrinho//
+// --- Fechar carrinho clicando fora ---
 cartModal.addEventListener("click", function(event){
     if(event.target === cartModal){
         cartModal.style.display = "none"
     }
 })
 
+// --- Fechar carrinho botão ---
 closeModalBtn.addEventListener("click", function(){
     cartModal.style.display = "none"
 })
 
-menu.addEventListener("click", function(event){
+// --- Adicionar ao carrinho (menu / combos) ---
+menu.addEventListener("click", handleAddToCart);
+combos.addEventListener("click", handleAddToCart);
+
+function handleAddToCart(event) {
     let parentButton = event.target.closest(".add-to-cart-btn")
-    
     if(parentButton){
         const name = parentButton.getAttribute("data-name")
         const price = parseFloat(parentButton.getAttribute("data-price"))
-
         addToCart(name, price)
     }
-
-})
-combos.addEventListener("click", function(event){
-    let parentButton = event.target.closest(".add-to-cart-btn")
-    
-    if(parentButton){
-        const name = parentButton.getAttribute("data-name")
-        const price = parseFloat(parentButton.getAttribute("data-price"))
-
-        addToCart(name, price)
-    }
-
-
-})
-
-
-function addToCart(name, price){
-
-    const existingItem = cart.find(item => item.name === name)
-
-    if(existingItem){
-        existingItem.quantity += 1;
-
-    }else{
-        cart.push({
-            name,
-            price,
-            quantity: 1,
-    })
-
-    }
-
-    
-
-    updateCartModal()
-
 }
 
+function addToCart(name, price){
+    const existingItem = cart.find(item => item.name === name)
+    if(existingItem){
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ name, price, quantity: 1 })
+    }
+    updateCartModal()
+}
+
+// --- Atualiza modal ---
 function updateCartModal(){
     cartItemsContainer.innerHTML = "";
     let total = 0;
 
     cart.forEach(item => {
         const cartItemElement = document.createElement("div");
-        cartItemElement.classList.add("flex", "justify-between", "mb-4", "flex-col")
+        cartItemElement.classList.add("flex", "justify-between", "items-center", "mb-4", "border-b", "pb-2");
 
         cartItemElement.innerHTML = `
-        
-        <div class="flex items-center justify-between">
-        <div>
-            <p class="font-bold">${item.name}</p>
-            <p>Qtd:${item.quantity}</p>
-            <p class="font-medium mt-2">R$ ${item.price.toFixed(2)}</p>
-        
-        
-        </div>
+            <div>
+                <p class="font-bold">${item.name}</p>
+                <p class="font-medium mt-1">R$ ${item.price.toFixed(2)}</p>
+            </div>
 
-            <button class="remove-from-cart-btn" data-name="${item.name}">
-            Remover
-            </button>
+            <div class="flex items-center gap-2">
+                <button class="decrease-btn bg-red-500 text-white px-2 rounded" data-name="${item.name}">-</button>
+                <span class="font-bold">${item.quantity}</span>
+                <button class="increase-btn bg-green-500 text-white px-2 rounded" data-name="${item.name}">+</button>
+            </div>
+        `;
 
-        </div>
-        
-        `
         total += item.price * item.quantity;
-        
         cartItemsContainer.appendChild(cartItemElement)
-
-    })
-    cartTotal.textContent = total.toLocaleString("pt-BR",{
-        style: "currency",
-        currency:"BRL"
     });
 
+    cartTotal.textContent = total.toLocaleString("pt-BR",{ style: "currency", currency:"BRL" });
     cartCounter.innerHTML = cart.length;
-
 }
 
+// --- Eventos dos botões ➕ e ➖ ---
 cartItemsContainer.addEventListener("click", function (event){
-    if(event.target.classList.contains("remove-from-cart-btn")) {
-        const name = event.target.getAttribute("data-name")
+    const name = event.target.getAttribute("data-name");
+
+    if(event.target.classList.contains("decrease-btn")) {
         removeItemCart(name);
-        // vazio, mas sintaticamente correto
+    }
+
+    if(event.target.classList.contains("increase-btn")) {
+        const item = cart.find(i => i.name === name);
+        if(item){
+            item.quantity += 1;
+            updateCartModal();
+        }
     }
 })
 
+// --- Remover item ---
 function removeItemCart(name){
     const index = cart.findIndex(item => item.name === name);
     if(index !== -1){
         const item = cart[index];
-
         if(item.quantity > 1){
             item.quantity -= 1;
-            updateCartModal();
-            return;
+        } else {
+            cart.splice(index, 1);
         }
-
-        cart.splice(index, 1);
         updateCartModal();
     }
 }
 
-
+// --- Endereço ---
 adressInput.addEventListener("input", function(event){
     let inpuValue = event.target.value;
     if(inpuValue !== ""){
         adressInput.classList.remove("border-red-500")
         adressWarn.classList.add("hidden")
     }
-
 })
 
+// --- Finalizar pedido ---
 checkoutBtn.addEventListener("click", function () {
   const aberto = checkRestaurantOpen();
   if (!aberto) {
@@ -252,100 +217,79 @@ Obrigado! 😊`;
   window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank");
 });
 
-
-  // Função para verificar se restaurante está aberto
-  function checkRestaurantOpen() {
+// --- Função restaurante aberto ---
+function checkRestaurantOpen() {
     const agora = new Date();
     const hora = agora.getHours();
     return hora >= 18 && hora < 24; // aberto das 18h até 23:59
-  }
-;
+};
 
-
-
-
-
-// Função para abrir o modal e adicionar as bebidas//
-
+// --- Função combos com bebidas ---
 let selectedCombo = null;
-
 combos.addEventListener("click", function(event){
   let parentButton = event.target.closest(".add-to-cart-btn")
-  
   if(parentButton){
       const name = parentButton.getAttribute("data-name")
       const price = parseFloat(parentButton.getAttribute("data-price"))
-
-      // Guardamos o combo selecionado temporariamente
       selectedCombo = { name, price };
-
-      // Preenche o modal de bebidas conforme o combo
       openDrinkModal(name);
   }
 })
 
-// Função loja aberta ou fechada//
-  const dateSpan = document.getElementById("date-span");
-
-  if (dateSpan) {
-    const aberto = checkRestaurantOpen();
-
-    // Garante que só tenha uma cor ativa
-    dateSpan.classList.remove("bg-green-600", "bg-red-500");
-
-    if (aberto) {
-      dateSpan.classList.add("bg-green-600");
-    } else {
-      dateSpan.classList.add("bg-red-500");
-    }
+// --- Status aberto/fechado ---
+const dateSpan = document.getElementById("date-span");
+if (dateSpan) {
+  const aberto = checkRestaurantOpen();
+  dateSpan.classList.remove("bg-green-600", "bg-red-500");
+  if (aberto) {
+    dateSpan.classList.add("bg-green-600");
+  } else {
+    dateSpan.classList.add("bg-red-500");
   }
+}
 
+// --- Navbar animada ---
+document.addEventListener("DOMContentLoaded", function () {
+  const navBar = document.getElementById("nav-bar");
+  let lastScroll = window.pageYOffset;
 
- document.addEventListener("DOMContentLoaded", function () {
-    const navBar = document.getElementById("nav-bar");
-    let lastScroll = window.pageYOffset;
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
 
-    window.addEventListener("scroll", () => {
-      const currentScroll = window.pageYOffset;
+    if (currentScroll > lastScroll) {
+      navBar.classList.remove("-translate-y-full");
+      navBar.classList.add("translate-y-0");
+    } else if (currentScroll < lastScroll) {
+      navBar.classList.add("-translate-y-full");
+      navBar.classList.remove("translate-y-0");
+    }
 
-      if (currentScroll > lastScroll) {
-        // rolando para baixo → MOSTRAR navbar
-        navBar.classList.remove("-translate-y-full");
-        navBar.classList.add("translate-y-0");
-      } else if (currentScroll < lastScroll) {
-        // rolando para cima → ESCONDER navbar
-        navBar.classList.add("-translate-y-full");
-        navBar.classList.remove("translate-y-0");
-      }
-
-      lastScroll = currentScroll <= 0 ? 0 : currentScroll;
-    });
+    lastScroll = currentScroll <= 0 ? 0 : currentScroll;
   });
+});
 
+// --- Helpers de valores ---
+const BRL = (v) => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-  // Ajuste da atualização com bairro, taxa e forma de paga//
-
-  const BRL = (v) => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-
-// --- Subtotal do carrinho ---
+// --- Subtotal ---
 function getSubtotal() {
   return cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 }
 
-// --- Taxa de entrega vinda do select (ex.: "Centro|5.00") ---
+// --- Taxa ---
 function getTaxaEntrega() {
   if (!deliveryArea || !deliveryArea.value) return 0;
   const [, taxa] = deliveryArea.value.split("|");
   return Number(taxa) || 0;
 }
 
-// --- Atualiza o total exibido no modal (subtotal + taxa) ---
+// --- Atualiza total ---
 function updateTotalDisplay() {
   const total = getSubtotal() + getTaxaEntrega();
   cartTotal.textContent = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// --- Mostrar/esconder campo de troco conforme pagamento ---
+// --- Troco ---
 paymentMethod?.addEventListener("change", () => {
   if (paymentMethod.value === "dinheiro") {
     changeSection?.classList.remove("hidden");
@@ -355,9 +299,6 @@ paymentMethod?.addEventListener("change", () => {
   }
 });
 
-// --- Recalcular total quando mudar o bairro ---
+// --- Recalcular total ---
 deliveryArea?.addEventListener("change", updateTotalDisplay);
-
-// --- Chama uma vez pra sincronizar o total ao abrir ---
 updateTotalDisplay();
-
