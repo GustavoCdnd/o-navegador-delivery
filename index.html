@@ -16,27 +16,53 @@
 
 <body>
 
-<header class="w-full h-[420px] bg-zinc-900  bg-[url('../assets/capa.jpg')] bg-cover bg-center">
-    <div class="w-full h-full flex flex-col justify-center items-center">
-        <img class="w-32 h-32 rounded-full shadow-lg hover:scale-110 duration-200" src="../assets/LOGO AZUL.png" alt="logo">
-        <h1 class="3x1 mt-4 mb-2 text-white text-center  items-center font-bold">O Navegador </h1>
-        <p>A melhor hamburgueria artesanal da região centro oeste de Manaus</p>
+<header class="w-full h-[420px] bg-zinc-900 bg-[url('../assets/capa.jpg')] bg-cover bg-center relative">
+  
+  <!-- Conteúdo principal -->
+  <div class="w-full h-full flex flex-col justify-center items-center bg-black/50 backdrop-blur-sm">
+    
+    <!-- Logo -->
+    <img 
+      class="w-32 h-32 rounded-full shadow-lg hover:scale-110 transition-transform duration-300" 
+      src="../assets/LOGO AZUL.png" 
+      alt="logo">
+    
+    <!-- Título -->
+    <h1 class="text-3xl mt-4 mb-2 text-white text-center font-bold tracking-wide drop-shadow-md">
+      O Navegador
+    </h1>
+    
+    <!-- Subtítulo -->
+    <p class="text-lg text-white text-center max-w-md font-light">
+      A melhor hamburgueria artesanal da região centro-oeste de Manaus
+    </p>
 
-        <span class="text-white font-medium">Rua cabedelo 124, Redenção</span>
+    <!-- Endereço -->
+    <span class="text-white mt-2 text-sm tracking-wide opacity-90">
+      Rua Cabedelo 124, Redenção
+    </span>
 
-        <div id="date-span" class="bg-green-600  px-4 py-1 rounded-lg mt-5">
-            <button class="font-medium  text-white">Quarta a sexta 18h as 23h <br>Sabado e domingo 18h as 00h</button>
-        </div>
-    </div>
-    <nav id="nav-bar" class="fixed top-0 left-0 w-full bg-zinc-800 bg-opacity-80 backdrop-blur-md text-white shadow-md z-50 transition-transform duration-300 transform translate-y-0">
-      <div class="max-w-6xl mx-auto px-4 py-3 flex justify-center gap-6">
-        <a href="#hamburgueres" class="hover:text-yellow-400 transition">🍔 Hamburgueres</a>
-        <a href="#bebidas" class="hover:text-yellow-400 transition">🥤 Bebidas</a>
-        <a href="#entradas" class="hover:text-yellow-400 transition">🍔 Entradas</a>
-        
+    <!-- Horários -->
+    <div id="date-span" class="mt-6">
+      <div class="px-6 py-3 rounded-lg bg-green-600/90 shadow-md hover:shadow-green-700/40 transition duration-300">
+        <p class="text-white font-semibold text-center leading-relaxed tracking-wide">
+          <span class="block">Quarta a Sexta — 18h às 23h</span>
+          <span class="block">Sábado e Domingo — 18h às 00h</span>
+        </p>
       </div>
-    </nav>
+    </div>
+  </div>
+
+  <!-- Navbar fixa -->
+  <nav id="nav-bar" class="fixed top-0 left-0 w-full bg-zinc-800/80 backdrop-blur-md text-white shadow-md z-50 transition-transform duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex justify-center gap-8 text-sm font-medium tracking-wide">
+      <a href="#hamburgueres" class="hover:text-yellow-400 transition-colors">🍔 Hamburgueres</a>
+      <a href="#bebidas" class="hover:text-yellow-400 transition-colors">🥤 Bebidas</a>
+      <a href="#entradas" class="hover:text-yellow-400 transition-colors">🥗 Entradas</a>
+    </div>
+  </nav>
 </header>
+
 
 
 <h2 class="text-2xl font-bold text-center mb-6 mt-6 md:text-3xl">Combos</h2>
@@ -753,6 +779,7 @@
    
 </body>
 </html>
+
 
 
 
