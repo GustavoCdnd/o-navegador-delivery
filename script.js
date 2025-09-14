@@ -148,7 +148,7 @@
         comboBtn.disabled = false
         comboBtn.classList.remove('bg-red-500')
         comboBtn.classList.add('bg-green-500')
-        statusSpan.textContent = 'Funcionamento das 18h às 23h'
+        statusSpan.textContent = 'Funcionamento das 18h às 00h'
         statusSpan.classList.add('text-white')
     } else { // Antes das 18h ou após 23:59
         comboBtn.disabled = true
@@ -691,6 +691,7 @@ cartItemsContainer.addEventListener("click", function (event) {
     // --- Recalcular total ---
     deliveryArea?.addEventListener("change", updateTotalDisplay);
     updateTotalDisplay();
+
 
 
 
