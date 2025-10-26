@@ -16,7 +16,7 @@
     const combos = document.getElementById("combos")
     const dateSpan = document.getElementById("date-span")
     // --- Listas ---
-    const drinksList = ["Coca-Cola", "Coca Zero", "Fanta Laranja", "Sprite", "Fanta Uva"]
+    const drinksList = ["Coca Zero", "Fanta Laranja", "Sprite", "Fanta Uva"]
 
     const burgersList = [
     {name:"Clássico do Porto", price:18},
@@ -691,6 +691,7 @@ cartItemsContainer.addEventListener("click", function (event) {
     // --- Recalcular total ---
     deliveryArea?.addEventListener("change", updateTotalDisplay);
     updateTotalDisplay();
+
 
 
 
