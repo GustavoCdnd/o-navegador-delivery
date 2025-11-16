@@ -1,56 +1,66 @@
-🍔 O Navegador – Cardápio Digital
+## 📖 Sobre o Projeto
 
-Um cardápio digital moderno e responsivo desenvolvido para a hamburgueria O Navegador, utilizando HTML, CSS com Tailwind, JavaScript e integrações com Font Awesome e Toastify.
+O **O Navegador – Cardápio Digital** é um site responsivo criado para facilitar a visualização de combos, hambúrgueres e bebidas de forma rápida e interativa.
 
-O objetivo do projeto é oferecer uma experiência rápida, intuitiva e agradável para que os clientes possam visualizar combos, lanches e bebidas de forma organizada e interativa.
+Desenvolvido com **HTML**, **TailwindCSS**, **JavaScript**, **Font Awesome** e **Toastify.js**, o projeto oferece uma experiência leve, eficiente e agradável para o cliente.
 
-🚀 Tecnologias Utilizadas
+---
 
-HTML5
+## 🚀 Tecnologias Utilizadas
 
-CSS3 + TailwindCSS
+- **HTML5**
+- **CSS3 + TailwindCSS**
+- **JavaScript**
+  - Manipulação do DOM  
+  - Modal dinâmico  
+  - Lógica dos combos  
+- **Font Awesome** — ícones  
+- **Toastify.js** — notificações
 
-JavaScript (manipulação do DOM, lógica dos combos e modal dinâmico)
+---
 
-Font Awesome (ícones)
+## 📌 Funcionalidades
 
-Toastify.js (notificações estilo “toast”)
+### 🔥 Destaques e Combos
+- Cards responsivos com imagem, descrição e preço  
+- Carrossel horizontal com *snap scroll*  
+- Botões que abrem o modal de seleção  
 
-📌 Funcionalidades
-🔥 Destaques e Combos
+### 🍔 Menu de Hambúrgueres
+- Lista completa com fotos  
+- Botão individual para adicionar ao carrinho  
+- Ingredientes detalhados  
 
-Cards responsivos com preço, imagem e descrição
+### 🥤 Bebidas
+- Layout em grid responsivo  
+- Preços e botão de adicionar  
 
-Carrossel horizontal com snap scroll
+### 🧾 Modal Inteligente
+- Seleção de bebidas, burgers e adicionais  
+- Cálculo automático do preço  
+- UI moderna com animação  
 
-Botões dinâmicos que abrem o modal de seleção
+---
 
-🍔 Menu de Hambúrgueres
+## 📱 Responsividade
 
-Lista completa com imagens
+O site é totalmente otimizado para dispositivos móveis:
 
-Cada item possui botão para adicionar ao carrinho
+- Layout fluido  
+- Animações de hover e blur  
+- Cabeçalho com capa + logo animada  
+- Navegação suave  
 
-Informações detalhadas dos ingredientes
+---
 
-🥤 Bebidas
+## 🛠️ Como Rodar o Projeto
 
-Refrigerantes e sucos dispostos em grid responsivo
+```bash
+# Clone este repositório
+git clone https://github.com/seu-usuario/seu-repositorio.git
 
-Preços e botões para adicionar ao carrinho
+# Acesse a pasta
+cd seu-repositorio
 
-🧾 Modal de Seleção de Combos
-
-Selecionar bebidas, burgues e adicionais
-
-Cálculo automático do total
-
-UI moderna com Tailwind + animação
-
-📱 Design Responsivo
-
-Comportamento otimizado para celulares
-
-Navegação suave, elementos com animações de hover e blur
-
-Cabeçalho com capa + logo animada
+# Execute o arquivo
+Abra o index.html no navegador
