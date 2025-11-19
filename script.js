@@ -654,7 +654,7 @@ cartItemsContainer.addEventListener("click", function (event) {
     Obrigado! 😊`;
 
     const encoded = encodeURIComponent(fullMessage)
-    const phone = "5595984128590"
+    const phone = "5592984128590"
     window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encoded}`,"_blank")
     })
 
@@ -691,6 +691,7 @@ cartItemsContainer.addEventListener("click", function (event) {
     // --- Recalcular total ---
     deliveryArea?.addEventListener("change", updateTotalDisplay);
     updateTotalDisplay();
+
 
 
 
